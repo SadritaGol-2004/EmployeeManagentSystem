@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_EMPLOYEES 100
+
+// Define a struct for employee data
+typedef struct {
+    char name[50];
+    int id;
+    float salary;
+    char job_title[50];
+} Employee;
+// Function prototypes
+void add_employee(Employee employees[], int* count);
+void print_employees(Employee employees[], int count);
+void search_employee(Employee employees[], int count);
+
+int main() {
+    Employee employees[MAX_EMPLOYEES]; // Create an array to hold employee data
+    int count = 0; // Keep track of the number of employees in the array
+    int choice,i=0;
+
+    do {
+        printf("\nEmployee Management System\n");
+        printf("1. Add Employee\n");
+        printf("2. View Employees\n");
+        printf("3. Search Employee\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                add_employee(employees, &count);
+                break;
+            case 2:
+                print_employees(employees, count);
+                break;
+            case 3:
+                search_employee(employees, count);
+                break;
+            case 4:
+                printf("Exiting program...\n");
+                break;
+            default:
+                printf("Invalid choice, please try again.\n");
+                break;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+void add_employee(Employee employees[], int* count) {
+    Employee new_employee;
+
+    printf("\nEnter Employee Details:\n");
+    printf("Name: ");
+    scanf(" %[^\n]", new_employee.name);
+    printf("ID: ");
+    scanf("%d", &new_employee.id);
+    printf("Salary: ");
+    scanf("%f", &new_employee.salary);
+    printf("Job Title: ");
+    scanf(" %[^\n]", new_employee.job_title);
+    employees[*count] = new_employee;
+    (*count)++;
+
+    printf("Employee added successfully!\n");
+}
+
+void print_employees(Employee employees[], int count) {
+    int i =0;
+	printf("\nEmployee List:\n");
+    for(i=0;i<count;i++) {
+        printf("Name: %s\n", employees[i].name);
+        printf("ID: %d\n", employees[i].id);
+        printf("Salary: %.2f\n", employees[i].salary);
+        printf("Job Title: %s\n", employees[i].job_title);
+        printf("\n");
+    }
+}
+
+void search_employee(Employee employees[], int count) {
+    int search_id;
+    printf("\nEnter Employee ID to Search: ");
+    scanf("%d", &search_id);
+int i=0;
+    for (i = 0; i < count; i++) {
+        if (employees[i].id == search_id) {
+            printf("\nEmployee Details:\n");
+            printf("Name: %s\n", employees[i].name);
+            printf("ID: %d\n", employees[i].id);
+            printf("Salary: %.2f\n", employees[i].salary);
+            printf("Job Title: %s\n", employees[i].job_title);
+            return;
+        }
+    }
+
+    printf("Employee not found.\n");
+}
+
